@@ -5,12 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.api.io.TempDir;
 
 class FrpcConfigTest {
@@ -56,7 +59,19 @@ class FrpcConfigTest {
 	}
 
 	@Test
-	void resolvesNestedRelativePathWithBackslashes(@TempDir Path gameDir) {
+	void resolvesNestedRelativePathWithPlatformSeparator(@TempDir Path gameDir) {
+		String nested = "a" + File.separator + "b.toml";
+
+		assertEquals(gameDir.resolve("a").resolve("b.toml"), FrpcConfig.resolvePath(gameDir, nested));
+	}
+
+	/**
+	 * 反斜杠只在 Windows 上是分隔符，在 Linux 上会被当成普通文件名字符，
+	 * 因此这条断言只能在 Windows 上跑，否则 CI（Linux）会误报失败。
+	 */
+	@Test
+	@EnabledOnOs(OS.WINDOWS)
+	void resolvesNestedRelativePathWithBackslashesOnWindows(@TempDir Path gameDir) {
 		assertEquals(gameDir.resolve("a").resolve("b.toml"), FrpcConfig.resolvePath(gameDir, "a\\b.toml"));
 	}
 

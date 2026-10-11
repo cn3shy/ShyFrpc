@@ -51,6 +51,12 @@ jobs:
       - name: Build with Gradle Wrapper
         run: ./gradlew build
 
+      - name: Read Mod Version
+        run: |
+          VERSION=$(grep '^mod_version' gradle.properties | cut -d'=' -f2 | tr -d ' \r')
+          echo "MOD_VERSION=${VERSION}" >> "$GITHUB_ENV"
+          echo "发布版本号: ${VERSION}"
+
       - name: Publish (Fabric)
         uses: Kir-Antipov/mc-publish@v3.3
         with:
@@ -60,7 +66,7 @@ jobs:
           curseforge-id: ${{ env.curseforge-id }}
           curseforge-token: "${{ secrets.CURSEFORGE_TOKEN }}"
 
-          name: "ShyFrpc Fabric"
+          name: "ShyFrpc Fabric ${{ env.MOD_VERSION }}"
           version-type: ${{ inputs.channel }}
           loaders: fabric
           files: fabric/build/libs/!(*-@(dev|sources|javadoc)).jar
@@ -75,7 +81,7 @@ jobs:
           curseforge-id: ${{ env.curseforge-id }}
           curseforge-token: "${{ secrets.CURSEFORGE_TOKEN }}"
 
-          name: "ShyFrpc Forge"
+          name: "ShyFrpc Forge ${{ env.MOD_VERSION }}"
           version-type: ${{ inputs.channel }}
           loaders: forge
           files: forge/build/libs/!(*-@(dev|sources|javadoc)).jar
@@ -90,7 +96,7 @@ jobs:
           curseforge-id: ${{ env.curseforge-id }}
           curseforge-token: "${{ secrets.CURSEFORGE_TOKEN }}"
 
-          name: "ShyFrpc NeoForge"
+          name: "ShyFrpc NeoForge ${{ env.MOD_VERSION }}"
           version-type: ${{ inputs.channel }}
           loaders: neoforge
           files: neoforge/build/libs/!(*-@(dev|sources|javadoc)).jar

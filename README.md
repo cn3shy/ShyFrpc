@@ -87,6 +87,22 @@ auto-start: false
 
 The jars land in `fabric/build/libs`, `forge/build/libs` and `neoforge/build/libs`.
 
+### Releasing
+
+The `Publish` workflow uploads to Modrinth and CurseForge. It reads the project IDs
+from **repository variables** and the API tokens from **repository secrets**
+(Settings → Secrets and variables → Actions):
+
+| Kind | Name | Value |
+| --- | --- | --- |
+| Variable | `MODRINTH_ID` | Modrinth project ID, e.g. `RTWpcTBp` |
+| Variable | `CURSEFORGE_ID` | CurseForge project ID, e.g. `450250` |
+| Secret | `MODRINTH_TOKEN` | Modrinth API token |
+| Secret | `CURSEFORGE_TOKEN` | CurseForge API token |
+
+>`Release` workflow requires no configuration — it triggers on `v*` tags or manually,
+and attaches the three jars to a GitHub Release.
+
 > **Note for users in mainland China:** `maven.neoforged.net` and
 > `maven.minecraftforge.net` are often unreachable there. Gradle's main process reads
 > proxy settings from `~/.gradle/gradle.properties`, but ForgeGradle's mavenizer runs in

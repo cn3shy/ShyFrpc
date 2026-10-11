@@ -14,9 +14,13 @@ on:
 
 env:
   java-version: "25"
-  # TODO: 创建 Modrinth / CurseForge 项目后替换这两个占位符
-  modrinth-id: TODO_CHANGE_ME
-  curseforge-id: TODO_CHANGE_ME
+
+  # 仓库变量（Settings → Secrets and variables → Actions → Variables）：
+  #   MODRINTH_ID      Modrinth 项目 ID（项目页 URL 里的那段，如 RTWpcTBp）
+  #   CURSEFORGE_ID    CurseForge 项目 ID（项目页 URL 里的数字）
+  # 未配置时对应平台会因 ID 为空而报错，属于预期行为。
+  modrinth-id: ${{ vars.MODRINTH_ID }}
+  curseforge-id: ${{ vars.CURSEFORGE_ID }}
 
 jobs:
   publish:

@@ -86,6 +86,21 @@ auto-start: false
 
 产物在 `fabric/build/libs`、`forge/build/libs`、`neoforge/build/libs`。
 
+### 发布
+
+`Publish` 工作流负责上传到 Modrinth 和 CurseForge。项目 ID 从**仓库变量**读取，
+API 令牌从**仓库密钥**读取（Settings → Secrets and variables → Actions）：
+
+| 类型 | 名称 | 值 |
+| --- | --- | --- |
+| 变量 | `MODRINTH_ID` | Modrinth 项目 ID，如 `RTWpcTBp` |
+| 变量 | `CURSEFORGE_ID` | CurseForge 项目 ID，如 `450250` |
+| 密钥 | `MODRINTH_TOKEN` | Modrinth API 令牌 |
+| 密钥 | `CURSEFORGE_TOKEN` | CurseForge API 令牌 |
+
+> `Release` 工作流无需额外配置——推送 `v*` 标签或手动触发即可，
+> 它会把三个 jar 作为附件创建 GitHub Release。
+
 > **国内用户注意**：`maven.neoforged.net` 会被 DNS 污染（解析到无关 IP），
 > `maven.minecraftforge.net` 也常不可达。Gradle 主进程会读
 > `~/.gradle/gradle.properties` 里的代理配置，但 ForgeGradle 的 mavenizer 跑在

@@ -34,3 +34,6 @@ build*.log
 
 # Minecraft / Gradle 运行日志
 logs/
+
+# 设计与实现文档（本地保留，不入库）
+docs/superpowers/

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "shyfrpc",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "启动本机 frpc 进程，把局域网房间通过 FRP 隧道暴露到公网。",
+  "authors": [
+    "${mod_authors}"
+  ],
+  "contact": {
+    "homepage": "https://github.com/cn3shy/ShyFrpc",
+    "issues": "https://github.com/cn3shy/ShyFrpc/issues",
+    "sources": "https://github.com/cn3shy/ShyFrpc"
+  },
+  "license": "Apache-2.0",
+  "environment": "client",
+  "entrypoints": {
+    "client": [ "io.github.cn3shy.shyfrpc.ShyFrpcFabric" ]
+  },
+  "depends": {
+    "fabric-api": "${fabric_version_range}",
+    "minecraft": ">=${minecraft_version_min} <${minecraft_version_max}",
+    "fabricloader": "${fabric_loader_version_range}",
+    "java": ">=25"
+  }
+}

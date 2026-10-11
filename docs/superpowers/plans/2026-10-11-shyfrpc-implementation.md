@@ -508,9 +508,9 @@ public class ShyFrpcFabric implements ClientModInitializer {
     "${mod_authors}"
   ],
   "contact": {
-    "homepage": "https://github.com/cn3shy/shy-frpc",
-    "issues": "https://github.com/cn3shy/shy-frpc/issues",
-    "sources": "https://github.com/cn3shy/shy-frpc"
+    "homepage": "https://github.com/cn3shy/ShyFrpc",
+    "issues": "https://github.com/cn3shy/ShyFrpc/issues",
+    "sources": "https://github.com/cn3shy/ShyFrpc"
   },
   "license": "Apache-2.0",
   "environment": "client",
@@ -549,14 +549,14 @@ public class ShyFrpcForge {
 modLoader="javafml"
 loaderVersion="${forge_loader_version_range}"
 license="Apache-2.0"
-issueTrackerURL="https://github.com/cn3shy/shy-frpc/issues"
+issueTrackerURL="https://github.com/cn3shy/ShyFrpc/issues"
 clientSideOnly=true
 
 [[mods]]
 modId="shyfrpc"
 version="${mod_version}"
 displayName="${mod_name}"
-displayURL="https://github.com/cn3shy/shy-frpc"
+displayURL="https://github.com/cn3shy/ShyFrpc"
 authors="${mod_authors}"
 description='''
 启动本机 frpc 进程，把局域网房间通过 FRP 隧道暴露到公网。
@@ -601,13 +601,13 @@ public class ShyFrpcNeoForge {
 modLoader="javafml"
 loaderVersion="${neo_loader_version_range}"
 license="Apache-2.0"
-issueTrackerURL="https://github.com/cn3shy/shy-frpc/issues"
+issueTrackerURL="https://github.com/cn3shy/ShyFrpc/issues"
 
 [[mods]]
 modId="shyfrpc"
 version="${mod_version}"
 displayName="${mod_name}"
-displayURL="https://github.com/cn3shy/shy-frpc"
+displayURL="https://github.com/cn3shy/ShyFrpc"
 authors="${mod_authors}"
 description='''
 启动本机 frpc 进程，把局域网房间通过 FRP 隧道暴露到公网。

@@ -1,0 +1,84 @@
+plugins {
+  id 'java'
+  id 'idea'
+  id 'eclipse'
+  id 'net.neoforged.moddev' version '2.+'
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+
+println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+
+version = project.minecraft_version + "-" + project.mod_version
+group = project.mod_group_id
+base.archivesName = "${mod_archive_name}-neoforge"
+
+repositories {
+  mavenLocal()
+}
+
+neoForge {
+  version = project.neo_version
+
+  runs {
+    client {
+      client()
+    }
+
+    server {
+      server()
+      programArgument '--nogui'
+    }
+  }
+
+  mods {
+    "${mod_id}" {
+      sourceSet(sourceSets.main)
+    }
+  }
+}
+
+sourceSets.main {
+  java {
+    srcDir "../src/main/java"
+  }
+  resources {
+    srcDir "../src/main/resources"
+    srcDir "src/generated/resources"
+  }
+}
+
+tasks.withType(ProcessResources).configureEach {
+  var replaceProperties = [
+    mod_name: project.mod_name,
+    mod_authors: project.mod_authors,
+    mod_version: project.mod_version,
+    neo_version_range : project.neo_version_range,
+    minecraft_version_min : project.minecraft_version_min,
+    minecraft_version_max : project.minecraft_version_max,
+    neo_loader_version_range : project.neo_loader_version_range,
+    pack_format_number: project.pack_format_number,
+  ]
+  inputs.properties replaceProperties
+  filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
+    expand replaceProperties
+  }
+}
+
+tasks.withType(JavaCompile).configureEach {
+  options.encoding = 'UTF-8'
+}
+
+java.withSourcesJar()
+
+jar {
+  from("../LICENSE") {
+  }
+}
+
+idea {
+  module {
+    downloadSources = true
+    downloadJavadoc = true
+  }
+}

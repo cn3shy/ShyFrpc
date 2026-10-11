@@ -1,0 +1,37 @@
+{
+  "shyfrpc.command.set.app.success": "frpc 路径已设置为：%s",
+  "shyfrpc.command.set.toml.success": "frpc 配置文件路径已设置为：%s",
+  "shyfrpc.command.set.sakura.success": "SakuraFrp 凭据已保存（隧道 %s）",
+
+  "shyfrpc.command.mode.success": "模式已切换为：%s",
+  "shyfrpc.command.mode.invalid": "未知模式「%s」。请使用 default 或 sakura。",
+
+  "shyfrpc.command.autoStart.success": "自动启动：%s",
+
+  "shyfrpc.command.on.success": "frpc 正在启动...",
+  "shyfrpc.command.on.already-running": "frpc 已在运行中。",
+  "shyfrpc.command.on.error.no-app": "尚未设置 frpc 路径。请先执行 /shyfrpc set app <路径>。",
+  "shyfrpc.command.on.error.app-not-found": "找不到 frpc 可执行文件：%s",
+  "shyfrpc.command.on.error.no-toml": "尚未设置配置文件路径。请执行 /shyfrpc set toml <路径>，或用 /shyfrpc mode sakura 切换到 SakuraFrp 模式。",
+  "shyfrpc.command.on.error.toml-not-found": "找不到 frpc 配置文件：%s",
+  "shyfrpc.command.on.error.no-sakura": "尚未设置 SakuraFrp 的 token 或隧道 ID。请执行 /shyfrpc set sakura <token> <隧道ID>。",
+  "shyfrpc.command.on.error.spawn-failed": "启动 frpc 失败：%s",
+
+  "shyfrpc.command.off.success": "frpc 已停止。",
+  "shyfrpc.command.off.not-running": "frpc 当前未运行。",
+
+  "shyfrpc.command.status.header": "=== ShyFrpc 状态 ===",
+  "shyfrpc.command.status.line": "%s：%s",
+  "shyfrpc.command.status.mode": "模式：%s",
+  "shyfrpc.command.status.auto-start": "自动启动：%s",
+  "shyfrpc.command.status.sakura": "SakuraFrp：token=%s 隧道=%s",
+  "shyfrpc.command.status.running": "frpc 运行中（PID %s，已运行 %s 秒，由%s启动）",
+  "shyfrpc.command.status.source.auto": "自动启动",
+  "shyfrpc.command.status.source.manual": "命令",
+  "shyfrpc.command.status.stopped": "frpc 未运行",
+
+  "shyfrpc.frpc.output": "[frpc] %s",
+  "shyfrpc.frpc.started": "[ShyFrpc] frpc 已启动",
+  "shyfrpc.frpc.stopped": "[ShyFrpc] frpc 已停止",
+  "shyfrpc.frpc.exited-unexpectedly": "[ShyFrpc] frpc 意外退出（退出码 %s）"
+}

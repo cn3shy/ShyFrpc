@@ -1,0 +1,50 @@
+pluginManagement {
+  repositories {
+    mavenLocal()
+    maven {
+      name = 'Fabric'
+      url = 'https://maven.fabricmc.net/'
+    }
+    maven {
+      name = 'NeoForge'
+      // 注意：不要写成 https://maven.neoforged.net/#/releases，
+      // 那是网页 UI 地址（带 # 片段），不是 Maven 仓库地址。
+      url = 'https://maven.neoforged.net/releases'
+    }
+    maven {
+      name = 'MinecraftForge'
+      url = 'https://maven.minecraftforge.net/'
+    }
+    maven {
+      name = 'Quilt'
+      url = 'https://maven.quiltmc.org/repository/release'
+    }
+    maven {
+        name = 'Minecraft libraries'
+        url = 'https://libraries.minecraft.net'
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'Sponge'
+                url = 'https://repo.spongepowered.org/repository/maven-public'
+            }
+        }
+        filter {
+            includeGroupAndSubgroups('org.spongepowered')
+        }
+    }
+    mavenCentral()
+    gradlePluginPortal()
+  }
+}
+
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
+
+rootProject.name = "shy-frpc"
+
+include("fabric")
+include("forge")
+include("neoforge")

@@ -1,0 +1,67 @@
+plugins {
+  id 'net.fabricmc.fabric-loom' version "${fabric_loom_version}"
+}
+
+println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+
+version = project.minecraft_version + "-" + project.mod_version
+group = project.mod_group_id
+base.archivesName = "${mod_archive_name}-fabric"
+
+dependencies {
+  minecraft "com.mojang:minecraft:${project.minecraft_version}"
+  implementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+  implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+  testImplementation platform('org.junit:junit-bom:5.11.4')
+  testImplementation 'org.junit.jupiter:junit-jupiter'
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+sourceSets {
+  main {
+    java {
+      srcDir "../src/main/java"
+    }
+    resources {
+      srcDir "../src/main/resources"
+      srcDir "src/generated/resources"
+    }
+  }
+}
+
+tasks.withType(ProcessResources).configureEach {
+  var replaceProperties = [
+    mod_name: project.mod_name,
+    mod_authors: project.mod_authors,
+    version: project.mod_version,
+    minecraft_version_min : project.minecraft_version_min,
+    minecraft_version_max : project.minecraft_version_max,
+    fabric_version_range : project.fabric_version_range,
+    fabric_loader_version_range : project.fabric_loader_version_range,
+    pack_format_number: project.pack_format_number,
+  ]
+  inputs.properties replaceProperties
+  filesMatching(['fabric.mod.json', 'pack.mcmeta']) {
+    expand replaceProperties
+  }
+}
+
+tasks.withType(JavaCompile).configureEach {
+  it.options.encoding = "UTF-8"
+  it.options.release = 25
+}
+
+test {
+  useJUnitPlatform()
+}
+
+java {
+  withSourcesJar()
+  sourceCompatibility = targetCompatibility = JavaVersion.VERSION_25
+}
+
+jar {
+  from("../LICENSE") {
+  }
+}

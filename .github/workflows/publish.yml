@@ -1,0 +1,93 @@
+name: Publish to Modrinth & CurseForge
+
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        type: choice
+        description: Release Channel
+        default: beta
+        options:
+          - alpha
+          - beta
+          - release
+
+env:
+  java-version: "25"
+  # TODO: 创建 Modrinth / CurseForge 项目后替换这两个占位符
+  modrinth-id: TODO_CHANGE_ME
+  curseforge-id: TODO_CHANGE_ME
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Set up JDK ${{ env.java-version }}
+        uses: actions/setup-java@v5
+        with:
+          java-version: ${{ env.java-version }}
+          distribution: "temurin"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-read-only: false
+          cache-cleanup: always
+
+      - name: Make Gradle Wrapper Executable
+        if: ${{ runner.os != 'Windows' }}
+        run: chmod +x ./gradlew
+
+      - name: Build with Gradle Wrapper
+        run: ./gradlew build
+
+      - name: Publish (Fabric)
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          fail-mode: warn
+          modrinth-id: ${{ env.modrinth-id }}
+          modrinth-token: "${{ secrets.MODRINTH_TOKEN }}"
+          curseforge-id: ${{ env.curseforge-id }}
+          curseforge-token: "${{ secrets.CURSEFORGE_TOKEN }}"
+
+          name: "ShyFrpc Fabric"
+          version-type: ${{ inputs.channel }}
+          loaders: fabric
+          files: fabric/build/libs/!(*-@(dev|sources|javadoc)).jar
+          java: Java ${{ env.java-version }}
+
+      - name: Publish (Forge)
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          fail-mode: warn
+          modrinth-id: ${{ env.modrinth-id }}
+          modrinth-token: "${{ secrets.MODRINTH_TOKEN }}"
+          curseforge-id: ${{ env.curseforge-id }}
+          curseforge-token: "${{ secrets.CURSEFORGE_TOKEN }}"
+
+          name: "ShyFrpc Forge"
+          version-type: ${{ inputs.channel }}
+          loaders: forge
+          files: forge/build/libs/!(*-@(dev|sources|javadoc)).jar
+          java: Java ${{ env.java-version }}
+
+      - name: Publish (NeoForge)
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          fail-mode: warn
+          modrinth-id: ${{ env.modrinth-id }}
+          modrinth-token: "${{ secrets.MODRINTH_TOKEN }}"
+          curseforge-id: ${{ env.curseforge-id }}
+          curseforge-token: "${{ secrets.CURSEFORGE_TOKEN }}"
+
+          name: "ShyFrpc NeoForge"
+          version-type: ${{ inputs.channel }}
+          loaders: neoforge
+          files: neoforge/build/libs/!(*-@(dev|sources|javadoc)).jar
+          java: Java ${{ env.java-version }}

@@ -1,0 +1,9 @@
+{
+  "pack": {
+    "description": "ShyFrpc Mod Resources",
+    "pack_format": ${pack_format_number},
+    "min_format": 1,
+    "max_format": 999,
+    "supported_formats": [1, 999]
+  }
+}

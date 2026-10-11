@@ -1,0 +1,37 @@
+{
+  "shyfrpc.command.set.app.success": "frpc path set to: %s",
+  "shyfrpc.command.set.toml.success": "frpc config path set to: %s",
+  "shyfrpc.command.set.sakura.success": "SakuraFrp credentials saved (tunnel %s)",
+
+  "shyfrpc.command.mode.success": "Mode set to: %s",
+  "shyfrpc.command.mode.invalid": "Unknown mode \"%s\". Use default or sakura.",
+
+  "shyfrpc.command.autoStart.success": "Auto-start: %s",
+
+  "shyfrpc.command.on.success": "frpc starting...",
+  "shyfrpc.command.on.already-running": "frpc is already running.",
+  "shyfrpc.command.on.error.no-app": "frpc path is not set. Use /shyfrpc set app <path> first.",
+  "shyfrpc.command.on.error.app-not-found": "frpc executable not found: %s",
+  "shyfrpc.command.on.error.no-toml": "Config path is not set. Use /shyfrpc set toml <path>, or switch to sakura mode with /shyfrpc mode sakura.",
+  "shyfrpc.command.on.error.toml-not-found": "frpc config file not found: %s",
+  "shyfrpc.command.on.error.no-sakura": "SakuraFrp token or tunnel ID is not set. Use /shyfrpc set sakura <token> <tunnel>.",
+  "shyfrpc.command.on.error.spawn-failed": "Failed to start frpc: %s",
+
+  "shyfrpc.command.off.success": "frpc stopped.",
+  "shyfrpc.command.off.not-running": "frpc is not running.",
+
+  "shyfrpc.command.status.header": "=== ShyFrpc status ===",
+  "shyfrpc.command.status.line": "%s: %s",
+  "shyfrpc.command.status.mode": "mode: %s",
+  "shyfrpc.command.status.auto-start": "auto-start: %s",
+  "shyfrpc.command.status.sakura": "sakura: token=%s tunnel=%s",
+  "shyfrpc.command.status.running": "frpc running (pid %s, up %ss, started by %s)",
+  "shyfrpc.command.status.source.auto": "auto-start",
+  "shyfrpc.command.status.source.manual": "command",
+  "shyfrpc.command.status.stopped": "frpc not running",
+
+  "shyfrpc.frpc.output": "[frpc] %s",
+  "shyfrpc.frpc.started": "[ShyFrpc] frpc started",
+  "shyfrpc.frpc.stopped": "[ShyFrpc] frpc stopped",
+  "shyfrpc.frpc.exited-unexpectedly": "[ShyFrpc] frpc exited unexpectedly (exit code %s)"
+}

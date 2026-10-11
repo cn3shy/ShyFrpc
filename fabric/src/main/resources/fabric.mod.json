@@ -13,6 +13,7 @@
     "sources": "https://github.com/cn3shy/ShyFrpc"
   },
   "license": "Apache-2.0",
+  "icon": "shyfrpc.png",
   "environment": "client",
   "entrypoints": {
     "client": [ "io.github.cn3shy.shyfrpc.ShyFrpcFabric" ]

@@ -8,6 +8,7 @@ modId="shyfrpc"
 version="${mod_version}"
 displayName="${mod_name}"
 displayURL="https://github.com/cn3shy/ShyFrpc"
+iconFile="shyfrpc.png"
 authors="${mod_authors}"
 description='''
 启动本机 frpc 进程，把局域网房间通过 FRP 隧道暴露到公网。

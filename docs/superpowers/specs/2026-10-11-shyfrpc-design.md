@@ -346,7 +346,7 @@ shyfrpc.frpc.exited-unexpectedly
 
 ```properties
 mod_id = shyfrpc
-mod_version = 26.10.11-beta
+mod_version = 2610.1.0
 mod_group_id = io.github.cn3shy.shyfrpc
 minecraft_version = 26.3
 
@@ -372,13 +372,31 @@ version = "${minecraft_version}-${mod_version}"
 得到：
 
 ```
-shyFrpc-fabric-26.3-26.10.11-beta.jar
-shyFrpc-forge-26.3-26.10.11-beta.jar
-shyFrpc-neoforge-26.3-26.10.11-beta.jar
+shyFrpc-fabric-26.3-2610.1.0.jar
+shyFrpc-forge-26.3-2610.1.0.jar
+shyFrpc-neoforge-26.3-2610.1.0.jar
 ```
 
 注意 `base.archivesName` 用驼峰 `shyFrpc`（用户指定的文件名形态），
 而 `mod_id` 用小写 `shyfrpc`（Fabric/Forge 对 mod id 有大小写约束）。
+
+### 10.1 版本号命名规则
+
+`mod_version` 采用 `<年月>.<本月发布次数>.<mod类型>` 三段式：
+
+| 段 | 含义 | 示例 |
+| --- | --- | --- |
+| 年月 | `YYMM` 两位年 + 两位月 | `2610` = 2026 年 10 月 |
+| 本月发布次数 | 该月内的第几次发布，从 `1` 起 | `1` = 本月第 1 次 |
+| mod类型 | `0` = beta，`1` = release | `0` = beta 版 |
+
+因此 `2610.1.0` 读作「2026 年 10 月的第 1 次发布，beta 版」。
+
+**发版时的人工步骤**：修改 `gradle.properties` 的 `mod_version`——同月内再发一次就把
+中段加一（`2610.2.0`），转正式版就把末段改成 `1`（`2610.1.1`）。
+
+这个末位类型标记与 `publish.yml` 的 `channel` 输入相互独立：前者写进版本号、
+对用户可见，后者只决定 Modrinth/CurseForge 上的版本分类。发布时应保持两者一致。
 
 ## 11. GitHub 工作流
 
@@ -397,7 +415,7 @@ shyFrpc-neoforge-26.3-26.10.11-beta.jar
 ### 11.3 `publish.yml`
 
 - 触发：`workflow_dispatch`，输入 `channel`（`alpha` / `beta` / `release`），
-  **默认 `beta`**（与当前版本号一致）
+  **默认 `beta`**（与当前 `mod_version` 末位 `0` 一致，见 §10.1）
 - 用 `Kir-Antipov/mc-publish@v3.3` 分别以 `fabric`、`forge`、`neoforge` 加载器
   发布到 Modrinth 与 CurseForge
 - 项目 ID 与 token **留占位符**，待用户创建项目后替换：

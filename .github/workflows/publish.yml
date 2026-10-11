@@ -3,11 +3,12 @@ name: Publish to Modrinth & CurseForge
 on:
   workflow_dispatch:
     inputs:
-      channel:
+      channel_override:
         type: choice
-        description: Release Channel
-        default: beta
+        description: '发布类型（auto = 按 mod_version 末位自动判定：0→beta，1→release）'
+        default: auto
         options:
+          - auto
           - alpha
           - beta
           - release
@@ -51,11 +52,32 @@ jobs:
       - name: Build with Gradle Wrapper
         run: ./gradlew build
 
-      - name: Read Mod Version
+      # 版本号格式为 <年月>.<本月发布次数>.<类型>，类型段：0 = beta，1 = release。
+      # 发布类型从这个末位推导，而不是让发布者再手选一次——两处独立的话迟早会对不上。
+      - name: Resolve Version and Channel
         run: |
           VERSION=$(grep '^mod_version' gradle.properties | cut -d'=' -f2 | tr -d ' \r')
+          TYPE="${VERSION##*.}"
+
+          case "$TYPE" in
+            1) DERIVED=release ;;
+            0) DERIVED=beta ;;
+            *)
+              echo "::error::mod_version 的末位类型段是 '$TYPE'，只允许 0（beta）或 1（release）"
+              exit 1
+              ;;
+          esac
+
+          if [ "${{ inputs.channel_override }}" = "auto" ]; then
+            CHANNEL="$DERIVED"
+          else
+            CHANNEL="${{ inputs.channel_override }}"
+            echo "::warning::手动把发布类型从 $DERIVED 覆盖成了 $CHANNEL，与版本号 $VERSION 不一致"
+          fi
+
           echo "MOD_VERSION=${VERSION}" >> "$GITHUB_ENV"
-          echo "发布版本号: ${VERSION}"
+          echo "CHANNEL=${CHANNEL}" >> "$GITHUB_ENV"
+          echo "版本号 ${VERSION}（末位 ${TYPE}） -> 发布类型 ${CHANNEL}"
 
       - name: Publish (Fabric)
         uses: Kir-Antipov/mc-publish@v3.3
@@ -67,7 +89,7 @@ jobs:
           curseforge-token: "${{ secrets.CURSEFORGE_TOKEN }}"
 
           name: "ShyFrpc Fabric ${{ env.MOD_VERSION }}"
-          version-type: ${{ inputs.channel }}
+          version-type: ${{ env.CHANNEL }}
           loaders: fabric
           files: fabric/build/libs/!(*-@(dev|sources|javadoc)).jar
           java: Java ${{ env.java-version }}
@@ -82,7 +104,7 @@ jobs:
           curseforge-token: "${{ secrets.CURSEFORGE_TOKEN }}"
 
           name: "ShyFrpc Forge ${{ env.MOD_VERSION }}"
-          version-type: ${{ inputs.channel }}
+          version-type: ${{ env.CHANNEL }}
           loaders: forge
           files: forge/build/libs/!(*-@(dev|sources|javadoc)).jar
           java: Java ${{ env.java-version }}
@@ -97,7 +119,7 @@ jobs:
           curseforge-token: "${{ secrets.CURSEFORGE_TOKEN }}"
 
           name: "ShyFrpc NeoForge ${{ env.MOD_VERSION }}"
-          version-type: ${{ inputs.channel }}
+          version-type: ${{ env.CHANNEL }}
           loaders: neoforge
           files: neoforge/build/libs/!(*-@(dev|sources|javadoc)).jar
           java: Java ${{ env.java-version }}

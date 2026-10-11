@@ -35,24 +35,24 @@ jobs:
       - name: Build with Gradle Wrapper
         run: ./gradlew build
 
-      # 版本号末位为类型段：0 = beta，1 = release。beta 在 GitHub 上标记为 Pre-release。
+      # 版本号末段是发布类型，如 2610.2.release。非 release 的一律标记为 Pre-release。
       - name: Resolve Version
         run: |
           VERSION=$(grep '^mod_version' gradle.properties | cut -d'=' -f2 | tr -d ' \r')
           TYPE="${VERSION##*.}"
 
           case "$TYPE" in
-            1) PRERELEASE=false ;;
-            0) PRERELEASE=true ;;
+            release) PRERELEASE=false ;;
+            beta|alpha) PRERELEASE=true ;;
             *)
-              echo "::error::mod_version 的末位类型段是 '$TYPE'，只允许 0（beta）或 1（release）"
+              echo "::error::mod_version 的末段 '$TYPE' 不是合法的发布类型，只允许 beta / release / alpha"
               exit 1
               ;;
           esac
 
           echo "MOD_VERSION=${VERSION}" >> "$GITHUB_ENV"
           echo "PRERELEASE=${PRERELEASE}" >> "$GITHUB_ENV"
-          echo "版本号 ${VERSION}（末位 ${TYPE}） -> prerelease=${PRERELEASE}"
+          echo "版本号 ${VERSION}（类型 ${TYPE}） -> prerelease=${PRERELEASE}"
 
       - name: Collect Jars
         run: |

@@ -52,18 +52,17 @@ jobs:
       - name: Build with Gradle Wrapper
         run: ./gradlew build
 
-      # 版本号格式为 <年月>.<本月发布次数>.<类型>，类型段：0 = beta，1 = release。
-      # 发布类型从这个末位推导，而不是让发布者再手选一次——两处独立的话迟早会对不上。
+      # 版本号格式为 <年月>.<本月发布次数>.<类型>，如 2610.2.release。
+      # 发布类型直接取末段，而不是让发布者再手选一次——两处独立的话迟早会对不上。
       - name: Resolve Version and Channel
         run: |
           VERSION=$(grep '^mod_version' gradle.properties | cut -d'=' -f2 | tr -d ' \r')
           TYPE="${VERSION##*.}"
 
           case "$TYPE" in
-            1) DERIVED=release ;;
-            0) DERIVED=beta ;;
+            release|beta|alpha) DERIVED="$TYPE" ;;
             *)
-              echo "::error::mod_version 的末位类型段是 '$TYPE'，只允许 0（beta）或 1（release）"
+              echo "::error::mod_version 的末段 '$TYPE' 不是合法的发布类型，只允许 beta / release / alpha"
               exit 1
               ;;
           esac

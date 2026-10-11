@@ -70,11 +70,13 @@ shy-frpc/
 ├── .github/workflows/{build,release,publish}.yml
 │
 ├── src/main/java/io/github/cn3shy/shyfrpc/       # 公共代码（三平台共用）
-│   ├── ShyFrpcUnit.java                 # 公共入口：常量、LOGGER、命令注册、tick 逻辑
-│   ├── FrpcConfig.java                  # 配置读写
+│   ├── ShyFrpcUnit.java                 # 公共入口：常量、LOGGER、游戏目录、局域网检测
+│   ├── FrpcConfig.java                  # 配置模型、读写、路径解析
+│   ├── FrpcMode.java                    # default / sakura 枚举
 │   ├── FrpcYaml.java                    # 极简 YAML 编解码
+│   ├── FrpcLauncher.java                # 启动命令构造 + 前置校验（纯函数）
+│   ├── ValidationError.java             # 校验失败结果
 │   ├── FrpcProcess.java                 # 子进程生命周期 + 输出转发
-│   ├── FrpcState.java                   # 运行状态与模式枚举
 │   └── commands/ShyFrpcCommand.java     # 命令树
 │
 ├── src/main/resources/

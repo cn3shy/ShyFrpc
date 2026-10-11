@@ -81,8 +81,8 @@ class FrpcConfigTest {
 		cfg.app = "C:\\Program Files\\frpc\\frpc.exe";
 		cfg.toml = "config/minecraft.toml";
 		cfg.mode = FrpcMode.SAKURA;
-		cfg.sakuraToken = "55qt9v9oofm19s1gfjzpkcz9o5ry4qmv";
-		cfg.sakuraTunnel = "27811507";
+		cfg.sakuraToken = "fake-token-for-testing";
+		cfg.sakuraTunnel = "12345678";
 		cfg.autoStart = true;
 		cfg.save(gameDir);
 

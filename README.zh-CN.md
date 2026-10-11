@@ -50,12 +50,16 @@
 
 ```
 /shyfrpc set app "C:\frpc\frpc.exe"
-/shyfrpc set sakura 55qt9v9oofm19s1gfjzpkcz9o5ry4qmv 27811507
+/shyfrpc set sakura <你的用户token> <你的隧道ID>
 /shyfrpc mode sakura
 /shyfrpc on
 ```
 
-实际执行的是 `frpc.exe -f 55qt9v9oofm19s1gfjzpkcz9o5ry4qmv:27811507`。
+实际执行的是 `frpc.exe -f <你的用户token>:<你的隧道ID>`。
+
+用户 token 从 SakuraFrp 账户页复制，隧道 ID 从隧道列表复制。
+`frpc -f` 是 SakuraFrp 自己的凭据格式——**token 是敏感信息**，
+不要把 `/shyfrpc status` 的截图或配置文件外发。
 
 ## 配置文件
 
@@ -93,8 +97,8 @@ API 令牌从**仓库密钥**读取（Settings → Secrets and variables → Act
 
 | 类型 | 名称 | 值 |
 | --- | --- | --- |
-| 变量 | `MODRINTH_ID` | Modrinth 项目 ID，如 `RTWpcTBp` |
-| 变量 | `CURSEFORGE_ID` | CurseForge 项目 ID，如 `450250` |
+| 变量 | `MODRINTH_ID` | Modrinth 项目 ID——项目页 URL 里的那段 slug |
+| 变量 | `CURSEFORGE_ID` | CurseForge 项目 ID——项目页 URL 末尾的数字 |
 | 密钥 | `MODRINTH_TOKEN` | Modrinth API 令牌 |
 | 密钥 | `CURSEFORGE_TOKEN` | CurseForge API 令牌 |
 

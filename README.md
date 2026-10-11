@@ -51,12 +51,16 @@ This runs `frpc.exe -c C:\frpc\minecraft.toml`.
 
 ```
 /shyfrpc set app "C:\frpc\frpc.exe"
-/shyfrpc set sakura 55qt9v9oofm19s1gfjzpkcz9o5ry4qmv 27811507
+/shyfrpc set sakura <your-user-token> <your-tunnel-id>
 /shyfrpc mode sakura
 /shyfrpc on
 ```
 
-This runs `frpc.exe -f 55qt9v9oofm19s1gfjzpkcz9o5ry4qmv:27811507`.
+This runs `frpc.exe -f <your-user-token>:<your-tunnel-id>`.
+
+Copy the user token from your SakuraFrp account page and the tunnel ID from the tunnel
+list. `frpc -f` is SakuraFrp's own credential format — the token is a secret, so don't
+share screenshots of `/shyfrpc status` or your config file.
 
 ## Configuration file
 
@@ -95,8 +99,8 @@ from **repository variables** and the API tokens from **repository secrets**
 
 | Kind | Name | Value |
 | --- | --- | --- |
-| Variable | `MODRINTH_ID` | Modrinth project ID, e.g. `RTWpcTBp` |
-| Variable | `CURSEFORGE_ID` | CurseForge project ID, e.g. `450250` |
+| Variable | `MODRINTH_ID` | Modrinth project ID — the slug segment in your project URL |
+| Variable | `CURSEFORGE_ID` | CurseForge project ID — the number at the end of your project URL |
 | Secret | `MODRINTH_TOKEN` | Modrinth API token |
 | Secret | `CURSEFORGE_TOKEN` | CurseForge API token |
 

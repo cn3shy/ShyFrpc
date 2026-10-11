@@ -30,8 +30,8 @@ class FrpcLauncherTest {
 		FrpcConfig cfg = new FrpcConfig();
 		cfg.app = "frpc.exe";
 		cfg.mode = FrpcMode.SAKURA;
-		cfg.sakuraToken = "55qt9v9oofm19s1gfjzpkcz9o5ry4qmv";
-		cfg.sakuraTunnel = "27811507";
+		cfg.sakuraToken = "fake-token-for-testing";
+		cfg.sakuraTunnel = "12345678";
 		return cfg;
 	}
 
@@ -56,7 +56,7 @@ class FrpcLauncherTest {
 		assertEquals(List.of(
 				gameDir.resolve("frpc.exe").toString(),
 				"-f",
-				"55qt9v9oofm19s1gfjzpkcz9o5ry4qmv:27811507"), command);
+				"fake-token-for-testing:12345678"), command);
 	}
 
 	@Test
